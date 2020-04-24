@@ -10,8 +10,9 @@ class Application
     req = Rack::Request.new(env)
 
     if req.path.match(/items/)
-      @@items.each do |item|
-        resp.write "#{item}\n"
+      # @@items.each do |item|
+      #   resp.write "#{item}\n"
+      @@cart.each { |item| resp.write "#{item}\n" }
       end
     elsif req.path.match(/search/)
       search_term = req.params["q"]
@@ -30,6 +31,7 @@ class Application
     elsif req.path.match(/cart/)
       if @@cart.length > 0
          @@cart.each { |item| resp.write "#{item}\n" }
+        # 同样意思
         # @@cart.each do |item|
         # resp.write "#{item}\n"
         # end
