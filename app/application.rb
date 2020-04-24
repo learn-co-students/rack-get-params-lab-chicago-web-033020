@@ -10,14 +10,14 @@ class Application
     req = Rack::Request.new(env)
 
     if req.path.match(/items/)
+      @@cart.each { |item| resp.write "#{item}\n" }
+      # 同样意思
       # @@items.each do |item|
       #   resp.write "#{item}\n"
-      @@cart.each { |item| resp.write "#{item}\n" }
-      end
-    elsif req.path.match(/search/)
+      # end
+    elsif req.path.match(/search/) # If we wanted to implement a /search route that accepted a GET param with the key q
       search_term = req.params["q"]
       resp.write handle_search(search_term)
-  
     elsif req.path.match(/add/) #Create a new route called /add that takes in a GET param with the key item.
       search_term = req.params["item"]
       if handle_search(search_term) == "#{search_term} is one of our items"   
